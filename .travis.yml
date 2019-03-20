@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t jhelion/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run jhelion/react-test npm test -- --coverage
+ 
+after_success:
+  - docker build -t dstasaski/multi-client ./client
+  - docker build -t dstasaski/multi-nginx ./nginx
+  - docker build -t dstasaski/multi-server ./server
+  - docker build -t dstasaski/multi-worker ./worker
+# take images and push them to docker hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID --password-stdin"
+  - docker push jhelion/multi-client
+  - docker push jhelion/multi-nginx
+  - docker push jhelion/multi-server
+  - docker push jhelion/multi-worker
+
+
