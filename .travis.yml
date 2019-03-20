@@ -14,9 +14,9 @@ after_success:
   - docker build -t dstasaski/multi-worker ./worker
 # take images and push them to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID --password-stdin"
-  - docker push jhelion/multi-client
-  - docker push jhelion/multi-nginx
-  - docker push jhelion/multi-server
-  - docker push jhelion/multi-worker
+  - docker push dstasaski/multi-client
+  - docker push dstasaski/multi-nginx
+  - docker push dstasaski/multi-server
+  - docker push dstasaski/multi-worker
 
 
